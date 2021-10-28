@@ -1,0 +1,50 @@
+#include<bits/stdc++.h>
+using namespace std;
+class Graph
+{
+    list<int> *l;
+    int V;
+    public:
+    Graph(int v)
+    {
+        V=v;
+        l=new list<int>[V];
+    }
+    void addEdges(int i,int j,bool undire=true)
+    {
+        l[i].push_back(j);
+        if(undire)
+        l[j].push_back(i);
+    }
+    void dfshelper(int source,bool visited[])
+    {
+        visited[source]=true;
+         cout<<source<<" -> ";
+         for(auto nbrs:l[source])
+         {
+             if(!visited[nbrs])
+             {
+              dfshelper(nbrs,visited);
+             }
+         }
+    }
+    void dfs(int source)
+    {
+        bool* visited=new bool[V]{0};
+        dfshelper(source,visited);
+    }
+};
+
+int main()
+{
+    Graph G(7);
+    G.addEdges(0,1);
+    G.addEdges(1,2);
+    G.addEdges(2,3);
+    G.addEdges(3,5);
+    G.addEdges(5,6);
+    G.addEdges(4,5);
+    G.addEdges(0,4);
+    G.addEdges(3,4);
+    G.dfs(1);
+}
