@@ -1,0 +1,53 @@
+#include<bits/stdc++.h>
+using namespace std;
+class Graph
+{
+    list*l;
+    int V;
+    public:
+    Graph(int v)
+    {
+        V=v;
+        list*l=new list<int>[V];
+    }
+    void addEdges(int i,int j,bool undire=true)
+    {
+        l[i].push_back(j);
+        if(undire)
+        l[j].push_back(i);
+    }
+void bfs(int source)
+    {
+        bool*b=new bool[V]{0};
+        queue<int>q;
+        q.push(source);
+        b[source]=true;
+        while(!q.empty())
+        {
+            int f=q.front();
+            cout<<f<<" -> ";
+            q.pop();
+            for(auto nbrs:l[f])
+            {
+                if(!b[nbrs])
+                {
+                 q.push(nbrs);
+                 b[nbrs]=true;
+                }
+            }
+        }
+    }
+ };
+int main()
+{
+    Graph G(7);
+    G.addEdges(0,1);
+    G.addEdges(1,2);
+    G.addEdges(2,3);
+    G.addEdges(3,5);
+    G.addEdges(5,6);
+    G.addEdges(4,5);
+    G.addEdges(0,4);
+    G.addEdges(3,4);
+    G.bfs(1);
+}
