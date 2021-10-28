@@ -1,0 +1,72 @@
+#include<bits/stdc++.h>
+using namespace std;
+class Graph
+{
+    list<int> *l;
+    int V;
+    public:
+    Graph(int v)
+    {
+        V=v;
+        l=new list<int>[V];
+    }
+    void addEdges(int i,int j,bool undire=false)
+    {
+        l[i].push_back(j);
+    }
+    
+   void Topological_sort(int source)
+   {
+       vector<int>indegree(V,0);
+       queue<int>q,ans;
+       for(int i=0;i<V;i++)
+       {
+           for(auto nbrs:l[i])
+           {
+               indegree[nbrs]++;
+           }
+       }
+       for(int i=0;i<V;i++)
+       {
+          for(auto nbrs:l[i])
+          {
+              if(indegree[nbrs]==0)
+              q.push(nbrs);
+          }
+       }
+       while(!q.empty())
+       {
+           int f=q.front();
+           q.pop();
+           ans.push(f);
+           for(auto nbrs:l[f])
+           {
+               indegree[nbrs]--;
+               if(indegree[nbrs]==0)
+               q.push(nbrs);
+           }
+       }
+       while(!ans.empty())
+       {
+           int f=ans.front();
+           cout<<f<<" ";
+           ans.pop();
+       }
+   }
+    
+};
+
+int main()
+{
+    Graph G(6);
+  //  G.addEdges(0,1);
+    G.addEdges(1,2);
+    G.addEdges(2,3);
+    G.addEdges(4,2);
+//    G.addEdges(5,6);
+//    G.addEdges(0,4);
+    G.addEdges(5,3);
+//    G.addEdges(0,5);
+ //   G.addEdges(3,4);
+   G.Topological_sort(1);
+}
